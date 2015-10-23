@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to Habitat Travaux</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+<link rel="stylesheet" href="fonts/font-awesome/font-awesome.css" />
+<link rel="stylesheet" href="css/custom.css" />
+<link rel="stylesheet" href="css/game.css" />
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+
+<script type="text/javascript">
+	function initialize() {
+
+		document.addEventListener('deviceready', onDeviceReady, false);
+	}
+
+	function onDeviceReady() {
+		//registering device for push notifications.
+        if (parseFloat(window.device.version) >= 7.0) {
+            // alert("match"+window.device.version);
+            document.body.style.marginTop = "20px";
+            $(".ui-header-fixed").css("padding-top", "20px");
+            $(".ui-header-fixed .ui-btn-left, .ui-header-fixed .ui-btn-right ").css("margin-top", "20px");
+            $(".head-1").css("margin-top", "20px");
+           
+            
+        }
+		registerPush();
+		window.plugins.spinnerDialog.hide();
+	}
+
+	function btnBack() {
+		window.location = "index.html";
+	}
+</script>
+</head>
+
+<body class="main game-container" onload="initialize()">
+	<!--For off condition-->
+	<!--<body class="main boussole-container main-off">-->
+	<div data-role="page" id="gamePage">
+		<div data-role="header" data-theme="b" data-position="fixed"
+			data-tap-toggle="false">
+			<a href="javascript:btnBack()" target="_parent"
+				class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-carat-l">Back</a>
+			<h1>Habitat Travaux</h1>
+		</div>
+
+		<span class="head-1">SALADE D'OUTILS</span>
+
+		<div id="zone_score" class="cf">
+			<div class="col_score">
+				<div id="best_score">
+					Best score : <span id="best_score_num"></span>
+				</div>
+				<div id="current_score">
+					Score : <span id="current_score_num"></span>
+				</div>
+			</div>
+			<div class="col_combo">
+				<div id="best_combo">
+					Best combo : <span id="best_combo_num"></span>
+				</div>
+				<div id="current_combo">
+					Combo : <span id="current_combo_num"></span>
+				</div>
+			</div>
+			<div class="col_moves">
+				<span id="moves"></span>
+			</div>
+		</div>
+		<!-- /#zone_score -->
+
+		<div id="zone_jeu"></div>
+		<!-- /#zone_jeu -->
+
+		<div id="zone_message">Loading...</div>
+		<!-- /#zone_message -->
+
+	</div>
+
+	<!-- /page -->
+
+
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script>
+		!window.jQuery
+				&& document
+						.write(unescape('%3Cscript src="js/jquery-1.8.0.min.js"%3E%3C/script%3E'))
+	</script>
+	<script src="js/jquery.mobile-1.4.5.min.js"></script>
+
+	<script type="text/javascript" src="js/init7b30.js?v=4"></script>
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+	</script>
+</body>
+</html>

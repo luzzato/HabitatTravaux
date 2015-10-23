@@ -1,0 +1,266 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Document sans nom</title>
+<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+<script src='js/jquery-1.8.0.min.js' type='text/javascript'></script>
+<link rel="stylesheet" href="css/stylesheet.css" type="text/css"
+	charset="utf-8">
+	<link href="css/navigation.css" rel="stylesheet"></link>
+	<script src="js/jquery.mobile-1.4.5.min.js"></script>
+	<meta name="viewport"
+		content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+<style>
+body {
+	background: url(images/bulle_bg.jpg) repeat;
+}
+.mainwrapper { /* Safari */
+	-webkit-transform: rotate(-90deg);
+	/* Firefox */
+	-moz-transform: rotate(-90deg);
+	/* IE */
+	-ms-transform: rotate(-90deg);
+	/* Opera */
+	-o-transform: rotate(-90deg);
+	/* Internet Explorer */
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3 );
+	margin-top: 0;
+	margin-right: 10%;
+}
+
+.gout {
+	background-image: url(images/gout.png);
+	z-index: 2;
+	height: 66px;
+	width: 117px;
+	position: absolute;
+	left: 191px;
+	top: 49px;
+}
+
+.bg2 {
+	height: 320px;
+	width: 480px;
+	z-index: 1;
+	background-image: url(images/bulle.png)
+}
+
+.barre1 {
+	background-image: url(images/barre.png);
+	z-index: 3;
+	position: absolute;
+	height: 88px;
+	width: 5px;
+	left: 191px;
+	top: 63px;
+}
+
+.barre2 {
+	background-image: url(images/barre.png);
+	z-index: 3;
+	position: absolute;
+	height: 88px;
+	width: 5px;
+	left: 300px;
+	top: 63px;
+}
+
+.deg {
+	height: 69px;
+	width: 154px;
+	position: absolute;
+	left: 165px;
+	top: 199px;
+	font-size: 60px;
+	color: #FFF;
+	text-shadow: 2px 2px 0px #ffffff;
+	font-family: 'digital_readout_thick_uprigRg';
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width
+	: 568px) {
+	.mainwrapper {
+		margin-top: 60%;
+		/*  background-color: 	#0000FF; */
+	}
+}
+
+@media only screen and (min-device-width : 768px) and (max-device-width
+	: 1024px) and (orientation : landscape) {
+	.mainwrapper { /* Safari */
+		-webkit-transform: rotate(-0deg);
+		/* Firefox */
+		-moz-transform: rotate(-0deg);
+		/* IE */
+		-ms-transform: rotate(-0deg);
+		/* Opera */
+		-o-transform: rotate(-0deg);
+		/* Internet Explorer */
+		filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0 );
+		margin-top: 25%;
+		margin-left: 25%;
+		/*  background-color: 	#DEB887; */
+	}
+}
+
+@media only screen and (min-device-width : 768px) and (max-device-width
+	: 1024px) and (orientation : portrait) {
+	.mainwrapper {
+		margin-top: 25%;
+		margin-left: 10%;
+		/*  background-color: 	#FFEBCD; */
+	}
+}
+
+@media only screen and (min-device-width : 720px) and (max-device-width
+	: 1280px) and (orientation : portrait) {
+	.mainwrapper {
+		margin-top: 180px !important;
+		margin-left: 0%;
+		/* background-color: #e00000; */
+	}
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width
+	: 568px) and (orientation : landscape) {
+	.mainwrapper { /* Safari */
+		-webkit-transform: rotate(0deg);
+		/* Firefox */
+		-moz-transform: rotate(0deg);
+		/* IE */
+		-ms-transform: rotate(0deg);
+		/* Opera */
+		-o-transform: rotate(0deg);
+		/* Internet Explorer */
+		filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0 );
+		margin-top: 25%;
+		margin-left: 10%;
+		/*  background-color: 	#FFEBCD; */
+	}
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width
+	: 568px) and (orientation : portrait) {
+	.mainwrapper { /* Safari */
+		-webkit-transform: rotate(-90deg);
+		/* Firefox */
+		-moz-transform: rotate(-90deg);
+		/* IE */
+		-ms-transform: rotate(-90deg);
+		/* Opera */
+		-o-transform: rotate(-90deg);
+		/* Internet Explorer */
+		filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0 );
+		/*  margin-top: 220px!important; ----in case of ios please use this one */
+		margin-top: 180px;
+		margin-left: 0%;
+
+		 /*  background-color:#ffffff; */
+	}
+}
+
+#page1.ui-page {
+	background: url(images/bulle_bg.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-size: 100% 100%;
+}
+</style>
+<script>
+			var watchID = null;
+
+			function onDeviceReady() {
+				window.plugins.spinnerDialog.hide();
+				if (parseFloat(window.device.version) >= 7.0) {
+					// alert("match"+window.device.version);
+					document.body.style.marginTop = "20px";
+					$(".ui-header-fixed").css("padding-top", "20px");
+					$(
+							".ui-header-fixed .ui-btn-left, .ui-header-fixed .ui-btn-right ")
+							.css("margin-top", "20px");
+
+				}
+				startWatch();
+			}
+			function startWatch() {
+
+				var options = {
+					frequency : 500
+				};
+				console.log("starting watch...........", options);
+				console.log(navigator.accelerometer);
+				watchID = navigator.accelerometer.watchAcceleration(onSuccess,
+						onError, options);
+			}
+
+			function onSuccess(acceleration) {
+				console.log("on success......")
+				var y = acceleration.y;
+				if (y < -5)
+					y = -5;
+				else if (y > 5)
+					y = 5;
+				var a = 191 + (y * 34);
+
+				$("div.gout").animate({
+					left : a + 'px'
+				});
+
+				var element = document.getElementById('target');
+				element.innerHTML = Math.abs(Math.round(y * 9 * 100) / 100);
+
+			}
+
+			function onError() {
+				alert('onError!');
+			}
+
+			document.addEventListener("deviceready", onDeviceReady, false);
+
+			function btnBack() {
+				window.location = "index.html";
+			}
+		</script>
+</head>
+
+<body marginheight="0px" marginwidth="0px" style="margin-top: 0px;">
+	<!--  <div style="position: fixed; top: 0px; left: 0px;z-index:99999;margin: 0px 0px 20px 0px;width:100%">
+            <a href="index.html">
+                <div class="bar">
+                    <div class="body">
+                        <div>
+                            <span></span>
+                        </div>
+                        <p>Back</p>
+                    </div>
+                </div>
+            </a>
+        </div>-->
+	<div data-role="page" id="page1">
+		<div data-role="header" data-theme="b" data-position="fixed"
+			data-tap-toggle="false">
+			<a href="javascript:btnBack()" target="_parent"
+				class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-carat-l">Back</a>
+			<h1>Habitat Travaux</h1>
+		</div>
+		<div class="mainwrapper">
+			<div class="gout"></div>
+			<div class="bg2">
+				<div class="barre1"></div>
+
+
+				<div class="barre2"></div>
+
+			</div>
+			<center>
+				<div class="deg" id="target">00.00</div>
+			</center>
+		</div>
+
+	</div>
+</body>
+</html>

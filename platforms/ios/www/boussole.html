@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to Habitat Travaux</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+<link rel="stylesheet" href="fonts/font-awesome/font-awesome.css" />
+<link rel="stylesheet" href="css/custom.css" />
+<script src='js/jquery-1.8.0.min.js' type='text/javascript'></script>
+<script src="js/jquery.mobile-1.4.5.min.js"></script>
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+
+<script type="text/javascript">
+	function initialize() {
+		//registering device for push notifications.
+       if (parseFloat(window.device.version) >= 7.0) {
+            // alert("match"+window.device.version);
+            document.body.style.marginTop = "20px";
+            $(".ui-header-fixed").css("padding-top", "20px");
+            $(".ui-header-fixed .ui-btn-left, .ui-header-fixed .ui-btn-right ").css("margin-top", "20px");
+            $(".circle-container").css("margin-top", "20px");
+            $(".circle-off-container").css("margin-top", "20px");
+           
+        }
+		document.addEventListener('deviceready', onDeviceReady, false);
+	}
+
+	function onDeviceReady() {
+		registerPush();
+		window.plugins.spinnerDialog.hide();
+		var options = {
+			frequency : 10
+		};
+
+		var watchID = navigator.compass.watchHeading(compassSuccess,
+				compassError, options);
+
+	}
+
+	// onSuccess: Get the current heading
+	//
+	function compassSuccess(heading) {
+		// var element = document.getElementById('heading');
+		// element.innerHTML = 'Heading: ' + heading.magneticHeading;
+
+		var needle = document.getElementById("needle");
+		var needle2 = document.getElementById("needle_off");
+		needle.setAttribute("style", "-webkit-transform: rotate("
+				+ (-heading.magneticHeading) + "deg);");
+		needle2.setAttribute("style", "-webkit-transform: rotate("
+				+ (-heading.magneticHeading) + "deg);");
+	}
+
+	// onError: Failed to get the heading
+
+	function compassError(compassError) {
+		//alert('Compass error: ' + compassError.code);
+		console.log('Compass Error' + compassError.code);
+	}
+
+	function btnBack() {
+		window.location = "index.html";
+	}
+
+	$(document).ready(function() {
+
+		var switchOn = false;
+		$('#switchChange').on("tap", function() {
+
+                             // alert(switchOn);
+			if (switchOn == true) {
+				document.getElementById('switchImage').src = "images/off.png";
+				document.getElementById('circleOff').style.display = "block";
+				document.getElementById('circleOn').style.display = "none";
+				$('body').removeClass();
+				$('body').addClass('main boussole-container main-off');
+				//document.body.className ="main boussole-container main-off"; 
+				switchOn = false;
+			} else if (switchOn == false) {
+				document.getElementById('switchImage').src = "images/on.png";
+				document.getElementById('circleOff').style.display = "none";
+				document.getElementById('circleOn').style.display = "block";
+
+				$('body').removeClass();
+				$('body').addClass('main boussole-container');
+				//document.body.className ="main boussole-container"; 
+				switchOn = true;
+			}
+		});
+	});
+</script>
+
+</head>
+
+<body class="main boussole-container" onload="initialize()">
+
+	<!--For off condition-->
+	<!--<body class="main boussole-container main-off">-->
+	<div data-role="page">
+
+		<div data-role="header" data-theme="b" data-position="fixed"
+			data-tap-toggle="false">
+			<a href="javascript:btnBack()" target="_parent"
+				class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-carat-l">Back</a>
+			<h1>Habitat Travaux</h1>
+		</div>
+
+
+		<!--ON-->
+
+		<div class="circle-container" id="circleOn">
+			<div class="circle-on">
+				<img src="images/circle-on.png" id="cercle">
+			</div>
+			<div class="fleche-on">
+				<img src="images/fleche-on.png" id="needle">
+			</div>
+		</div>
+
+
+
+		<!--OFF-->
+
+		<div class="circle-off-container" id="circleOff"
+			style="display: none;">
+			<div class="circle-on">
+				<img src="images/circle-off.png" id="cercle_off">
+			</div>
+
+			<div class="fleche-off">
+				<img src="images/fleche-off.png" id="needle_off">
+			</div>
+		</div>
+
+		<!--SWITCH-->
+
+		<div class="switch-container" id="switchChange">
+			<div class="switch-on">
+				<a href="#" target="_parent"><img src="images/on.png"
+					id="switchImage"></a>
+			</div>
+		</div>
+		<!-- <div class="switch-on" id="switchChange">
+			<img src="images/on.png" id="switchImage">
+
+		</div> -->
+	</div>
+
+	<!-- /page -->
+	<script src="js/custom.js"></script>
+
+</body>
+</html>

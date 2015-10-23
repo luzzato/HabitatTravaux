@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to Habitat Travaux</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+<link rel="stylesheet" href="fonts/font-awesome/font-awesome.css" />
+<link rel="stylesheet" href="css/custom.css" />
+<script src='js/jquery-1.8.0.min.js' type='text/javascript'></script>
+<script src="js/jquery.mobile-1.4.5.min.js"></script>
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+
+<script type="text/javascript">
+
+		
+	document.addEventListener('deviceready', onDeviceReady, false);
+	
+
+	function onDeviceReady() {
+		//registering device for push notifications.
+        
+		registerPush();
+	   window.plugins.spinnerDialog.hide();
+	}
+
+	function btnBack() {
+		window.location = "index.html";
+	}
+	$(document).ready(function() {
+		$('#montant').keyup(function(event) {
+			  if (event.keyCode == '13') {
+				  calculer();
+			     event.preventDefault();
+			  }
+		});
+		$('#duree').keyup(function(event) {
+			  if (event.keyCode == '13') {
+				  calculer();
+				
+			     event.preventDefault();
+			  }
+		});
+		$('#interet').keyup(function(event) {
+			  if (event.keyCode == '13') {
+				  calculer();
+				 
+			     event.preventDefault();
+			  }
+		});
+	});
+	
+	function calculer()
+	{
+	    var paiement = '';
+	    var total = '';
+	    var f = document.frm;
+	    var iMontant = parseInt(f.montant.value);
+	    regExp = /\,/g;
+	    f.interet.value = f.interet.value.replace(regExp,'.');
+	    var fInteret = parseFloat(f.interet.value);
+	    var iDuree = parseInt(f.duree.value);
+
+	    if(f.montant.value == iMontant &&
+	       f.interet.value == fInteret &&
+	       f.duree.value   == iDuree &&
+	       fInteret > 0 && fInteret < 100 && iMontant > 0 &&
+	       iDuree > 0 && iDuree < 1200)
+	    {
+	        // 1200 mois = 100 ans
+	        var tauxPeriode = fInteret/100/12;
+	        paiement = Math.floor((iMontant*tauxPeriode)/(1-Math.pow((1+tauxPeriode),(-1*iDuree)))*100)/100;
+	        total = Math.ceil((paiement*iDuree-iMontant)*100)/100;
+	    }
+
+	    document.getElementById('reponsePaiement').innerHTML = paiement+" €";
+	    document.getElementById('reponseTotal').innerHTML = total+" €";
+
+	    return false;
+	}
+</script>
+</head>
+
+<body class="main board-container">
+	<!--For off condition-->
+	<!--<body class="main boussole-container main-off">-->
+	<div data-role="page" id="currencyPage">
+
+		<div data-role="header" data-theme="b" data-position="fixed"
+			data-tap-toggle="false">
+			<a href="javascript:btnBack()" target="_parent"
+				class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-carat-l">Back</a>
+			<h1>Habitat Travaux</h1>
+		</div>
+
+
+		<div class="board-holder">
+			<div class="board-bg">
+				<div class="form-1">
+					<form name="frm" onSubmit="return calculer()">
+						<input tabindex=1 name="montant" id="montant" value=""
+							type="number" class="input-1" size="10" maxlength="10"
+							onKeyUp="calculer()" ontouchstart="calculer()"> <input
+							tabindex=3 name="interet" id="interet" value="" type="number"
+							class="input-1" size="10" maxlength="10" onKeyUp="calculer()"
+							ontouchstart="calculer()"> <input name="duree" tabindex=2
+							id="duree" value="" type="number" class="input-2" size="10"
+							maxlength="10" onKeyUp="calculer()" ontouchstart="calculer()">
+					</form>
+				</div>
+				<div class="clear"></div>
+				<div class="validation-box">
+					<div class="validation-message" id="reponsePaiement">..</div>
+					<div class="validation-message" id="reponseTotal">..</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- /page -->
+	<script src="js/custom.js"></script>
+</body>
+</html>
